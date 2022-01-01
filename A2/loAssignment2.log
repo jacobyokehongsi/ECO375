@@ -1,0 +1,65 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  D:\UofT\Y2 Winter\ECO375\A2\loAssignment2.log
+  log type:  text
+ opened on:  21 Apr 2021, 20:42:29
+
+. 
+. *DO THE TABLE 2 SPECIFICATIONS
+. use daAssignment2.dta, clear
+
+. xtset code_numeric year_numeric
+       panel variable:  code_numeric (strongly balanced)
+        time variable:  year_numeric, 31 to 41
+                delta:  1 unit
+
+. reg fhpolrigaug L1.lrgdpch, robust
+
+Linear regression                               Number of obs     =      1,023
+                                                F(1, 1021)        =     955.24
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.4034
+                                                Root MSE          =     .27869
+
+------------------------------------------------------------------------------
+             |               Robust
+ fhpolrigaug |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     lrgdpch |
+         L1. |   .2254815   .0072955    30.91   0.000     .2111657    .2397974
+             |
+       _cons |  -1.257608   .0624196   -20.15   0.000    -1.380094   -1.135123
+------------------------------------------------------------------------------
+
+. *...
+. 
+. *EXAMPLES OF MERGING IN OTHER DATA
+. 
+. *1. MERGE IN OTHER DATA FROM ACEMOGLU ET AL. (2008)
+. *1a. Get the spreadsheet and cut and paste it into an empty stata "data editor"
+. *1b. Save this data in your directory
+. *save temp.dta, replace
+. 
+. *1c. Get the countries used in the Table 2 data from the assignment 2 data: daAssignment2.dta  
+. use daAssignment2.dta, clear
+
+. 
+. *1d. Create a data set that is the list of 147 countries from the data set
+. collapse (mean) code_numeric, by(country)
+
+. 
+. *1e. Merge this country list into the ACEMOGLU "temp" data
+. merge 1:m country using temp
+file temp.dta not found
+r(601);
+
+end of do-file
+
+r(601);
+
+. do "D:\UofT\Y2 Winter\ECO375\A2\anAssignment2_Week12.do"
+
+. cd "D:\UofT\Y2 Winter\ECO375\A2"
+D:\UofT\Y2 Winter\ECO375\A2
+
+. cap log close _all
